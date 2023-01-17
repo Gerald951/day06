@@ -3,6 +3,7 @@ package sg.edu.nus.iss;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.io.*;
 
 /**
  * Hello world!
@@ -64,6 +65,31 @@ public final class App {
     executorService.execute(mRI3);
     executorService.execute(mRI4);
     executorService.execute(mRI5);
-    executorService.close();
+    executorService.shutdown();
 
-} }
+    MyRunnableInterface<Integer> addOperation  = (a, b) -> {
+        return a+b;
+    };
+    MyRunnableInterface<Integer> multiplyOperation = (a, b) -> {
+        return a*b;
+    };
+    MyRunnableInterface<Integer> minusOperation = (a, b) -> {
+        return a-b;
+    };
+    MyRunnableInterface<String> concatenateString = (a, b) -> {
+        return a+b;
+    };
+    MyMessageInterface printString = (a) -> {
+        System.out.println(a);
+    };
+
+    System.out.println("addOperation: " + addOperation.process(1, 1));
+    System.out.println("multiplyOperation: " + multiplyOperation.process(2, 5));
+    System.out.println("minusOperation: " + minusOperation.process(10, 5));
+    System.out.println("concatenateString: " + concatenateString.process("The fox", " Jumps over the wall"));
+    printString.printMessage("Let's take a break at 12pm");
+
+
+
+    } 
+}
