@@ -1,8 +1,12 @@
 package sg.edu.nus.iss;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 import java.io.*;
 
 /**
@@ -89,7 +93,37 @@ public final class App {
     System.out.println("concatenateString: " + concatenateString.process("The fox", " Jumps over the wall"));
     printString.printMessage("Let's take a break at 12pm");
 
+//list of employees
+List<Employee> employees = new ArrayList<Employee>();
+employees.add(new Employee(1, "Adam", "Cheng", 50000));
+employees.add(new Employee(2, "Betty", "Zheng", 7000));
+employees.add(new Employee(3, "Charlie", "Ng", 80000));
+employees.add(new Employee(4, "Dan", "Tan", 50000));
+employees.add(new Employee(5, "Esther", "Cheng", 9000));
+// employees.forEach(emp -> {
+//     System.out.println(emp);
+//  });
+
+List<Employee> filteredEmployees = employees.stream().filter(emp -> emp.getLastName().
+contains("Ch")).collect(Collectors.toList());
+//filteredEmployees.forEach(emp -> System.out.println(emp));
+
+// employees.sort(Comparator.comparing(e -> e.getFirstName()));
+// employees.sort(Comparator.comparing(Employee::getFirstName));
+// employees.sort(Comparator.comparing(Employee::getFirstName).reversed());
+Comparator<Employee> compare = Comparator.comparing(e ->e.getFirstName());
+employees.sort(compare.reversed());
 
 
-    } 
+// employees.forEach(emp -> {
+//     System.out.println(emp);
+//  });
+
+ Comparator<Employee> groupByComparator = Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getLastName);
+ employees.sort(groupByComparator);
+ employees.forEach(emp -> 
+ System.out.println(emp));
+
+} 
+
 }
